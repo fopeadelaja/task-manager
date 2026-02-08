@@ -1,4 +1,5 @@
-import { Flex, Heading, Text } from "@chakra-ui/react";
+import { Box, Flex, Heading, Text } from "@chakra-ui/react";
+import ColorModeSwitch from "./ColorModeSwitch";
 
 const SideBar = () => {
   return (
@@ -11,9 +12,16 @@ const SideBar = () => {
       borderRightWidth="1px"
       borderRightStyle="solid"
       borderColor="colors.gray.50"
+      justifyContent="space-between"
     >
-      <Heading>kanban</Heading>
-      <Text color="textSubtle">ALL BOARDS</Text>
+      <Box>
+        <Heading>kanban</Heading>
+        <Text color="textSubtle">ALL BOARDS</Text>
+      </Box>
+
+      <Box alignSelf="center" bg="pageBg" padding={5}>
+        <ColorModeSwitch />
+      </Box>
     </Flex>
   );
 };

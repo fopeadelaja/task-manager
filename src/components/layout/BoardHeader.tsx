@@ -32,7 +32,7 @@ export const BoardHeader = () => {
         </Button>
         <Menu.Root>
           <Menu.Trigger asChild>
-            <Button variant="outline" size="sm">
+            <Button variant="ghost" size="sm">
               <Icon>
                 <BsThreeDotsVertical />
               </Icon>
