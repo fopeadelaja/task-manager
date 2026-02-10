@@ -10,3 +10,8 @@ export interface Column {
     tasks: Task[];
 }
 
+export interface Board {
+    id: string;
+    title: string;
+    columns: Column[]
+}

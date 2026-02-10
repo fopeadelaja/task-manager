@@ -2,7 +2,7 @@ import { Box, Flex } from "@chakra-ui/react";
 import { BoardHeader } from "./BoardHeader";
 import SideBar from "./SideBar";
 import EmptyBoard from "../board/EmptyBoard";
-import Board from "../board/Board";
+import KanbanColumn from "../board/KanbanColumn";
 
 const AppLayout = () => {
   return (
@@ -20,9 +20,11 @@ const AppLayout = () => {
         </Box>
 
         {/* Main content area below header, centered */}
-        <Flex as="main" flex="1" align="center" justify="center">
-          {/* <EmptyBoard /> */}
-          <Board />
+        {/* <Flex as="main" flex="1" align="center" justify="center">
+          <EmptyBoard />
+        </Flex> */}
+        <Flex as="main" flex="1">
+          <KanbanColumn />
         </Flex>
       </Flex>
     </Flex>

@@ -1,5 +1,6 @@
 import { type Column } from "../../types/kanban";
-import { Box, Flex, Heading, Text } from "@chakra-ui/react";
+import { Box, Flex, Heading } from "@chakra-ui/react";
+import TaskCard from "./TaskCard";
 
 // interface Props {
 //   column: Column[];
@@ -26,26 +27,21 @@ const columnsData: Column[] = [
   },
 ];
 
-const Board = () => {
+const KanbanColumn = () => {
   return (
-    <Flex direction="row" gap={6} justifyContent="space-evenly">
+    <Flex direction="row" gap={6} align="flex-start">
       {columnsData.map((column) => (
-        <Box key={column.id}>
+        <Box key={column.id} margin={6} p={3}>
           <Heading size="md" mb={4}>
-            {column.title}
+            {column.title} ({column.tasks.length})
           </Heading>
-
-          <Flex direction="column" gap={3}>
-            {column.tasks.map((task) => (
-              <Box key={task.id} p={3}>
-                <Text>{task.title}</Text>
-              </Box>
-            ))}
-          </Flex>
+          {column.tasks.map((task) => (
+            <TaskCard key={task.id} task={task} />
+          ))}
         </Box>
       ))}
     </Flex>
   );
 };
 
-export default Board;
+export default KanbanColumn;
