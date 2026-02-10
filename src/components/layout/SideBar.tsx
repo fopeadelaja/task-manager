@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Text, Image, HStack } from "@chakra-ui/react";
+import { Box, Flex, Heading, Image, HStack } from "@chakra-ui/react";
 import ColorModeSwitch from "./ColorModeSwitch";
 import logo from "../../assets/logo.svg";
 
@@ -20,7 +20,7 @@ const SideBar = () => {
         <Heading size="xl">kanban</Heading>
       </HStack>
 
-      <Box alignSelf="center" bg="pageBg" padding={5}>
+      <Box alignSelf="center" bg="pageBg" padding={5} marginY={10}>
         <ColorModeSwitch />
       </Box>
     </Flex>
