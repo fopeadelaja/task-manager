@@ -1,14 +1,6 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Heading,
-  Icon,
-  Menu,
-  Portal,
-} from "@chakra-ui/react";
-import { BsThreeDotsVertical } from "react-icons/bs";
+import { Box, Flex, Heading } from "@chakra-ui/react";
 import AddNewTask from "../board/AddNewTask";
+import HeaderMenu from "./HeaderMenu";
 
 export const BoardHeader = () => {
   return (
@@ -29,27 +21,7 @@ export const BoardHeader = () => {
 
       <Box marginRight={5}>
         <AddNewTask />
-        <Menu.Root>
-          <Menu.Trigger asChild>
-            <Button variant="ghost" size="sm">
-              <Icon>
-                <BsThreeDotsVertical />
-              </Icon>
-            </Button>
-          </Menu.Trigger>
-          <Portal>
-            <Menu.Positioner>
-              <Menu.Content>
-                <Menu.Item value="edit-board" color="textSubtle">
-                  Edit Board
-                </Menu.Item>
-                <Menu.Item value="delete-board" color="destructive">
-                  Delete Board
-                </Menu.Item>
-              </Menu.Content>
-            </Menu.Positioner>
-          </Portal>
-        </Menu.Root>
+        <HeaderMenu />
       </Box>
     </Flex>
   );
