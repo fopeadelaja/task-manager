@@ -8,6 +8,7 @@ import {
   Portal,
 } from "@chakra-ui/react";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import AddNewTask from "../board/AddNewTask";
 
 export const BoardHeader = () => {
   return (
@@ -27,9 +28,7 @@ export const BoardHeader = () => {
       </Heading>
 
       <Box marginRight={5}>
-        <Button borderRadius="25px" bg="primary" color="white">
-          +Add New Task
-        </Button>
+        <AddNewTask />
         <Menu.Root>
           <Menu.Trigger asChild>
             <Button variant="ghost" size="sm">

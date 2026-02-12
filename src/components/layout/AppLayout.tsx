@@ -6,7 +6,7 @@ import KanbanColumn from "../board/KanbanColumn";
 
 const AppLayout = () => {
   return (
-    <Flex h="100vh" bg="pageBg">
+    <Flex h="100%" bg="pageBg">
       {/* Sidebar on the left, fixed width */}
       <Box as="aside" w="300px">
         <SideBar />

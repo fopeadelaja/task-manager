@@ -5,7 +5,7 @@ const config = defineConfig({
     tokens: {
       colors: {
         brand: {
-          50:  { value: "#F4F2FF" },
+          50: { value: "#F4F2FF" },
           100: { value: "#E6E1FF" },
           200: { value: "#CFC7FF" },
           300: { value: "#B7ADFF" },
@@ -79,11 +79,17 @@ const config = defineConfig({
             _dark: "{colors.red.500}",
           },
         },
+        buttonSecondary: {
+          value: {
+            _light: "{colors.gray.50}",
+            _dark: "{colors.gray.100}",
+          },
+        }
       },
     },
   },
 });
- 
+
 const system = createSystem(defaultConfig, config);
 
 export default system;

@@ -12,14 +12,20 @@ const TaskCard = ({ task }: Props) => {
         bg="cardBg"
         variant="subtle"
         mb={5}
-        borderRadius="lg"
+        borderRadius="20px"
         padding={3}
         boxShadow="sm"
         key={task.id}
+        w="400px"
       >
         <Card.Body>
           <Text alignContent={"flex-start"}>{task.title}</Text>
         </Card.Body>
+        <Card.Footer>
+          {task.subtasks ? (
+            <Text color="textSubtle">{task.subtasks?.length} Subtasks</Text>
+          ) : null}
+        </Card.Footer>
       </Card.Root>
     </Flex>
   );
