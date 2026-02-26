@@ -1,8 +1,11 @@
 import { Box, Flex, Heading } from "@chakra-ui/react";
 import AddNewTask from "../board/AddNewTask";
 import HeaderMenu from "./HeaderMenu";
+import { useBoard } from "../../context/BoardContext";
 
 export const BoardHeader = () => {
+  const { activeBoard } = useBoard();
+
   return (
     <Flex
       width="100%"
@@ -15,8 +18,8 @@ export const BoardHeader = () => {
       borderColor="colors.gray.50"
       justifyContent="space-between"
     >
-      <Heading size="xl" marginLeft={5}>
-        Platform Launch
+      <Heading size="xl" marginLeft={5} color="textMain">
+        {activeBoard?.title || "No Board Selected"}
       </Heading>
 
       <Box marginRight={5}>

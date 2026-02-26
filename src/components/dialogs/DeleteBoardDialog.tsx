@@ -1,24 +1,16 @@
-import {
-  Button,
-  CloseButton,
-  Dialog,
-  HStack,
-  Portal,
-  VStack,
-  Text,
-} from "@chakra-ui/react";
+import { Button, Dialog, HStack, Text, VStack, Portal } from "@chakra-ui/react";
 
 interface Props {
   isOpen: boolean;
-  onDelete: () => void;
   onClose: () => void;
+  onDelete: () => void;
   boardName?: string;
 }
 
 const DeleteBoardDialog = ({
   isOpen,
-  onDelete,
   onClose,
+  onDelete,
   boardName = "this board",
 }: Props) => {
   return (
@@ -26,61 +18,51 @@ const DeleteBoardDialog = ({
       size="sm"
       placement="center"
       motionPreset="slide-in-bottom"
-      closeOnInteractOutside={true}
       open={isOpen}
+      onOpenChange={(e) => !e.open && onClose()}
+      closeOnInteractOutside={true}
     >
-      {" "}
       <Portal>
         <Dialog.Backdrop bg="blackAlpha.600" />
         <Dialog.Positioner>
-          <Dialog.Content
-            bg="cardBg"
-            color="textMain"
-            borderRadius="md"
-            p={6}
-            maxW="md"
-          >
-            <Dialog.Header mb={4}>
+          <Dialog.Content bg="cardBg" color="textMain" borderRadius="md" p={6}>
+            <Dialog.Header>
               <Dialog.Title fontSize="xl" fontWeight="bold" color="destructive">
                 Delete this board?
               </Dialog.Title>
-              <Dialog.CloseTrigger asChild>
-                <CloseButton size="sm" />
-              </Dialog.CloseTrigger>
             </Dialog.Header>
             <Dialog.Body>
               <VStack align="stretch" gap={6}>
-                <Text color="textSubtle" fontSize="sm">
+                <Text color="textSubtle" fontSize="sm" lineHeight="tall">
                   Are you sure you want to delete the '{boardName}' board? This
                   action will remove all columns and tasks and cannot be
                   reversed.
                 </Text>
 
-                <HStack w="100%">
+                <HStack gap={4} width="100%">
                   <Button
                     borderRadius="20px"
-                    bg="buttonSecondary"
-                    w="50%"
-                    color="primary"
-                    onClick={onDelete}
-                    fontSize="sm"
-                    fontWeight="bold"
-                    _hover={{ bg: "rgba(99, 95, 199, 0.25)" }}
-                  >
-                    Delete
-                  </Button>
-
-                  <Button
-                    borderRadius="20px"
-                    bg="primary"
-                    w="50%"
+                    flex={1}
+                    bg="destructive"
                     color="white"
                     fontSize="sm"
                     fontWeight="bold"
-                    _hover={{ bg: "primaryAlpha.800" }}
+                    _hover={{ bg: "red.300" }}
+                    onClick={onDelete}
+                  >
+                    Delete
+                  </Button>
+                  <Button
+                    borderRadius="20px"
+                    flex={1}
+                    bg="white"
+                    color="primary"
+                    fontSize="sm"
+                    fontWeight="bold"
+                    _hover={{ bg: "gray.100" }}
                     onClick={onClose}
                   >
-                    Close
+                    Cancel
                   </Button>
                 </HStack>
               </VStack>

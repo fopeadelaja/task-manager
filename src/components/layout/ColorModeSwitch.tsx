@@ -10,7 +10,7 @@ const ColorModeSwitch = () => {
     >
       <Switch.HiddenInput />
       <Switch.Control />
-      <Switch.Label>Activate Chakra</Switch.Label>
+      <Switch.Label>Dark Mode</Switch.Label>
     </Switch.Root>
   );
 };

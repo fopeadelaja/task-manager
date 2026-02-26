@@ -2,16 +2,19 @@ import { Box, Flex, Heading, Image, HStack } from "@chakra-ui/react";
 import ColorModeSwitch from "./ColorModeSwitch";
 import logo from "../../assets/logo.svg";
 import BoardList from "./BoardList";
-import { platformLaunchBoard } from "../../types/kanban";
+import CreateBoardButton from "./CreateBoardButton";
+import { useBoard } from "../../context/BoardContext";
 
 const SideBar = () => {
+  const { boards } = useBoard();
+
   return (
     <Flex
       width="300px"
       height="100%"
       direction="column"
       bgColor="cardBg"
-      color="white"
+      color="textMain"
       borderRightWidth="1px"
       borderRightStyle="solid"
       borderColor="colors.gray.50"
@@ -23,7 +26,8 @@ const SideBar = () => {
           <Heading size="xl">kanban</Heading>
         </HStack>
 
-        <BoardList boards={platformLaunchBoard} />
+        <BoardList boards={boards} />
+        <CreateBoardButton />
       </Box>
 
       <Box alignSelf="center" bg="pageBg" padding={5} m={10}>

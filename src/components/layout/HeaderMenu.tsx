@@ -1,7 +1,8 @@
 import { Menu, Button, Icon, Portal } from "@chakra-ui/react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useState } from "react";
-import DeleteBoardDialog from "../board/DeleteBoardDialog"; // Make sure path is correct
+import DeleteBoardDialog from "../dialogs/DeleteBoardDialog"; // Make sure path is correct
+import EditBoardDialog from "../dialogs/EditBoardDialog";
 
 const HeaderMenu = () => {
   const [activeModal, setActiveModal] = useState<"edit" | "delete" | null>(
@@ -48,12 +49,16 @@ const HeaderMenu = () => {
         </Portal>
       </Menu.Root>
 
+      {/* <EditBoardDialog isOpen={activeModal === "edit"} onClose={closeAll} /> */}
+
       <DeleteBoardDialog
         isOpen={activeModal === "delete"}
         onDelete={handleDelete}
         onClose={closeAll}
         boardName="Platform Launch"
       />
+
+      <EditBoardDialog isOpen={activeModal === "edit"} onClose={closeAll} />
     </>
   );
 };
