@@ -11,13 +11,8 @@ import {
   Select,
   createListCollection,
 } from "@chakra-ui/react";
-import {
-  useForm,
-  useFieldArray,
-  Controller,
-  type SubmitHandler,
-} from "react-hook-form";
-import { Boards } from "../../types/kanban";
+import { useForm, useFieldArray, Controller } from "react-hook-form";
+import { useBoard } from "../../context/BoardContext";
 
 interface TaskFormValues {
   title: string;
@@ -27,10 +22,13 @@ interface TaskFormValues {
 }
 
 const AddNewTask = () => {
+  const { activeBoard, addTask } = useBoard();
+
   const {
     register,
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<TaskFormValues>({
     defaultValues: {
@@ -46,13 +44,25 @@ const AddNewTask = () => {
     name: "subtasks",
   });
 
-  const onSubmit: SubmitHandler<TaskFormValues> = (data) => {
-    console.log("Form Submitted:", data);
-    // TODO: Add your logic to save the task here
+  const onSubmit = (data: TaskFormValues) => {
+    if (!activeBoard || data.status.length === 0) return;
+
+    const newTask = {
+      id: data.title.replace(/\s+/g, "-").toLowerCase(),
+      title: data.title,
+      description: data.description,
+      subtasks: data.subtasks.map((st) => ({
+        id: crypto.randomUUID(),
+        title: st.title,
+      })),
+    };
+
+    addTask(activeBoard.id, data.status[0], newTask);
+    reset();
   };
 
   const columnsCollection = createListCollection({
-    items: Boards.flatMap((board) => board.status).map((column) => ({
+    items: (activeBoard?.status || []).map((column) => ({
       label: column.title,
       value: column.id,
     })),

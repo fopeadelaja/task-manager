@@ -12,6 +12,7 @@ interface BoardContextType {
   setActiveBoard: (id: string) => void;
   updateBoard: (boardId: string, data: CreateBoardFormValues) => void;
   createNewBoard: (data: CreateBoardFormValues) => void;
+  addTask: (boardId: string, columnId: string, task: any) => void;
 }
 
 const BoardContext = createContext<BoardContextType>({} as BoardContextType);
@@ -65,16 +66,33 @@ export const BoardProvider: React.FC<{ children: React.ReactNode }> = ({
     const newBoard: Board = {
       id: data.title,
       title: data.title,
-      status: data.columns.map(col => ({
+      status: data.columns.map((col) => ({
         id: col.title,
         title: col.title,
-        tasks: []
-      }))
-        }
+        tasks: [],
+      })),
+    };
 
-        setBoards([...boards, newBoard])
-        setActiveBoardId(newBoard.id)
+    setBoards([...boards, newBoard]);
+    setActiveBoardId(newBoard.id);
   };
+
+
+  const addTask = (boardId: string, columnId: string, task: any) => {
+    setBoards((prevBoards) => prevBoards.map(board => {
+      if (board.id !== boardId) return board;
+      return {
+        ...board, 
+        status: board.status.map(col => {
+          if (col.id !== columnId) return col;
+          return{
+            ...col,
+            tasks: [...col.tasks, task]
+          }
+      })
+      }
+  }))
+  }
 
   return (
     <BoardContext.Provider
@@ -84,7 +102,8 @@ export const BoardProvider: React.FC<{ children: React.ReactNode }> = ({
         activeBoard,
         setActiveBoard,
         updateBoard,
-        createNewBoard
+        createNewBoard,
+        addTask,
       }}
     >
       {children}
