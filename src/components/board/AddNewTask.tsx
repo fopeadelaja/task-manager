@@ -18,7 +18,7 @@ interface TaskFormValues {
   title: string;
   description: string;
   subtasks: { title: string }[];
-  status: string[];
+  status: string;
 }
 
 const AddNewTask = () => {
@@ -35,7 +35,7 @@ const AddNewTask = () => {
       title: "",
       description: "",
       subtasks: [{ title: "" }, { title: "" }],
-      status: [],
+      status: "",
     },
   });
 
@@ -45,7 +45,7 @@ const AddNewTask = () => {
   });
 
   const onSubmit = (data: TaskFormValues) => {
-    if (!activeBoard || data.status.length === 0) return;
+    if (!activeBoard || !data.status) return;
 
     const newTask = {
       id: data.title.replace(/\s+/g, "-").toLowerCase(),
@@ -57,7 +57,7 @@ const AddNewTask = () => {
       })),
     };
 
-    addTask(activeBoard.id, data.status[0], newTask);
+    addTask(activeBoard.id, data.status, newTask);
     reset();
   };
 
@@ -91,7 +91,7 @@ const AddNewTask = () => {
         <Dialog.Backdrop bg="blackAlpha.600" />
         <Dialog.Positioner>
           <Dialog.Content bg="cardBg" color="textMain" borderRadius="md" p={6}>
-            <Dialog.Header mb={4}>
+            <Dialog.Header>
               <Dialog.Title fontSize="xl" fontWeight="bold">
                 Add New Task
               </Dialog.Title>
@@ -195,8 +195,8 @@ const AddNewTask = () => {
                         <Select.Root
                           collection={columnsCollection}
                           positioning={{ sameWidth: true }}
-                          value={field.value}
-                          onValueChange={(e) => field.onChange(e.value)}
+                          value={field.value ? [field.value] : []}
+                          onValueChange={(e) => field.onChange(e.value[0])}
                         >
                           <Select.Control>
                             <Select.Trigger

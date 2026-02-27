@@ -77,22 +77,23 @@ export const BoardProvider: React.FC<{ children: React.ReactNode }> = ({
     setActiveBoardId(newBoard.id);
   };
 
-
   const addTask = (boardId: string, columnId: string, task: any) => {
-    setBoards((prevBoards) => prevBoards.map(board => {
-      if (board.id !== boardId) return board;
-      return {
-        ...board, 
-        status: board.status.map(col => {
-          if (col.id !== columnId) return col;
-          return{
-            ...col,
-            tasks: [...col.tasks, task]
-          }
-      })
-      }
-  }))
-  }
+    setBoards((prevBoards) =>
+      prevBoards.map((board) => {
+        if (board.id !== boardId) return board;
+        return {
+          ...board,
+          status: board.status.map((col) => {
+            if (col.id !== columnId) return col;
+            return {
+              ...col,
+              tasks: [...col.tasks, task],
+            };
+          }),
+        };
+      }),
+    );
+  };
 
   return (
     <BoardContext.Provider
