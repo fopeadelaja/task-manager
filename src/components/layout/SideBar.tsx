@@ -1,13 +1,15 @@
-import { Box, Flex, Heading, Image, HStack } from "@chakra-ui/react";
+import { Box, Flex, Heading, Image, HStack, Text } from "@chakra-ui/react";
+import { LuEyeOff } from "react-icons/lu";
 import ColorModeSwitch from "./ColorModeSwitch";
 import logo from "../../assets/logo.svg";
 import BoardList from "./BoardList";
 import CreateBoardButton from "./CreateBoardButton";
-import { useBoard } from "../../context/BoardContext";
 
-const SideBar = () => {
-  const { boards } = useBoard();
+interface SideBarProps {
+  onClose?: () => void;
+}
 
+const SideBar = ({ onClose }: SideBarProps) => {
   return (
     <Flex
       width="300px"
@@ -26,12 +28,30 @@ const SideBar = () => {
           <Heading size="xl">kanban</Heading>
         </HStack>
 
-        <BoardList boards={boards} />
+        <BoardList />
         <CreateBoardButton />
       </Box>
 
-      <Box alignSelf="center" bg="pageBg" padding={5} m={10}>
-        <ColorModeSwitch />
+      <Box px={6} pb={8} w="full">
+        <Box bg="pageBg" py={3} borderRadius="md" mb={4}>
+          <ColorModeSwitch />
+        </Box>
+        <HStack
+          onClick={onClose}
+          color="textSubtle"
+          _hover={{ color: "primary", bg: "pageBg" }}
+          gap={3}
+          px={6}
+          py={3}
+          w="full"
+          borderRadius="r-full"
+          ml={-6}
+          cursor="pointer"
+          // transition="all 0.2s"
+        >
+          <LuEyeOff size={18} />
+          <Text fontWeight="bold">Hide Sidebar</Text>
+        </HStack>
       </Box>
     </Flex>
   );
