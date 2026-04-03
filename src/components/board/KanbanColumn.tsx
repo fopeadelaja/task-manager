@@ -15,7 +15,7 @@ const KanbanColumn = () => {
             {column.title} ({column.tasks.length})
           </Heading>
           {column.tasks.map((task) => (
-            <TaskCard key={task.id} task={task} />
+            <TaskCard key={task.id} task={task} onClick={() => console.log(task.title)}/>
           ))}
         </Box>
       ))}

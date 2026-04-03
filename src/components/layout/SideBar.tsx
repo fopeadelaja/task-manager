@@ -47,7 +47,7 @@ const SideBar = ({ onClose }: SideBarProps) => {
           borderRadius="r-full"
           ml={-6}
           cursor="pointer"
-          // transition="all 0.2s"
+          transition="all 0.2s"
         >
           <LuEyeOff size={18} />
           <Text fontWeight="bold">Hide Sidebar</Text>

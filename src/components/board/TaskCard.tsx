@@ -3,9 +3,10 @@ import { type Task } from "../../types/kanban";
 
 interface Props {
   task: Task;
+  onClick: () => void;
 }
 
-const TaskCard = ({ task }: Props) => {
+const TaskCard = ({ task, onClick }: Props) => {
   return (
     <Flex direction="column" gap={3}>
       <Card.Root
@@ -18,7 +19,7 @@ const TaskCard = ({ task }: Props) => {
         key={task.id}
         w="400px"
       >
-        <Card.Body>
+        <Card.Body onClick={onClick}>
           <Text alignContent={"flex-start"}>{task.title}</Text>
         </Card.Body>
         <Card.Footer>
