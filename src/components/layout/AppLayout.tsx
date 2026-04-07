@@ -3,7 +3,6 @@ import { useState } from "react";
 import { LuEye } from "react-icons/lu";
 import { BoardHeader } from "./BoardHeader";
 import SideBar from "./SideBar";
-import EmptyBoard from "../board/EmptyBoard";
 import KanbanColumn from "../board/KanbanColumn";
 
 const AppLayout = () => {
