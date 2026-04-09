@@ -17,7 +17,7 @@ const KanbanColumn = () => {
       {activeBoard.status.map((column) => (
         <Box key={column.id} margin={6} p={3}>
           <Heading size="md" mb={4}>
-            {column.title} ({column.tasks.length})
+            {column.title.toUpperCase()} ({column.tasks.length})
           </Heading>
           {column.tasks.map((task) => (
             <TaskCard key={task.id} task={task} onClick={() => setEditingTask(task)}/>
