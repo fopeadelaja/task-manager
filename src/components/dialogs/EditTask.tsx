@@ -1,6 +1,7 @@
 import type { Task } from "@/types/kanban";
-import { Checkbox, Dialog, Flex, Portal, Text } from "@chakra-ui/react";
+import { Checkbox, Dialog, Flex, Portal, Text, Select, createListCollection, VStack } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
+import { useBoard } from "../../context/BoardContext";
 
 interface Props {
   isOpen: boolean;
@@ -9,14 +10,28 @@ interface Props {
 }
 
 const EditTask = ({ isOpen, task, onClose }: Props) => {
+  const { activeBoard } = useBoard();
+  const currentColumn = activeBoard?.status.find((col) => col.tasks.some((t) => t.id === task?.id));
+  
   const [completedSubtasks, setCompletedSubtasks] = useState<number[]>([]);
+  const [status, setStatus] = useState<string>("");
 
   useEffect(() => {
-    // Reset completed subtasks when modal opens/closes or task changes
+    // Reset states when modal opens/closes or task changes
     if (isOpen) {
       setCompletedSubtasks([]);
+      if (currentColumn) {
+        setStatus(currentColumn.id);
+      }
     }
-  }, [isOpen, task]);
+  }, [isOpen, task, currentColumn?.id]);
+
+  const columnsCollection = createListCollection({
+    items: (activeBoard?.status || []).map((column) => ({
+      label: column.title,
+      value: column.id,
+    })),
+  });
 
   const toggleSubtask = (id: number, isChecked: boolean) => {
     if (isChecked) {
@@ -86,6 +101,55 @@ const EditTask = ({ isOpen, task, onClose }: Props) => {
                 </Flex>
               </>
             )}
+
+              <VStack align="stretch" gap={2} mt={6}>
+                <Text fontSize="xs" fontWeight="bold" color="textMain">
+                  Current Status
+                </Text>
+                <Select.Root
+                  collection={columnsCollection}
+                  positioning={{ sameWidth: true }}
+                  value={status ? [status] : []}
+                  onValueChange={(e) => setStatus(e.value[0])}
+                >
+                  <Select.Control>
+                    <Select.Trigger
+                      border="1px solid"
+                      borderColor="rgba(130, 143, 163, 0.25)"
+                      borderRadius="4px"
+                      p={2}
+                    >
+                      <Select.ValueText placeholder="Select status" />
+                    </Select.Trigger>
+                    <Select.IndicatorGroup>
+                      <Select.Indicator />
+                    </Select.IndicatorGroup>
+                  </Select.Control>
+                  <Portal>
+                    <Select.Positioner>
+                      <Select.Content
+                        bg="cardBg"
+                        borderColor="rgba(130, 143, 163, 0.25)"
+                      >
+                        {columnsCollection.items.map((column) => (
+                          <Select.Item
+                            item={column}
+                            key={column.value}
+                            _hover={{
+                              bg: "gray.700",
+                              color: "primary",
+                            }}
+                            p={2}
+                          >
+                            {column.label}
+                          </Select.Item>
+                        ))}
+                      </Select.Content>
+                    </Select.Positioner>
+                  </Portal>
+                  <Select.HiddenSelect />
+                </Select.Root>
+              </VStack>
             </Dialog.Body>
           </Dialog.Content>
         </Dialog.Positioner>
