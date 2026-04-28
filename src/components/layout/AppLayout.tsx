@@ -1,11 +1,15 @@
 import { Box, Flex } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { LuEye } from "react-icons/lu";
 import { BoardHeader } from "./BoardHeader";
 import SideBar from "./SideBar";
-import KanbanColumn from "../board/KanbanColumn";
+import { Outlet } from "react-router";
 
-const AppLayout = () => {
+interface AppLayoutProps {
+  children?: ReactNode;
+}
+
+const AppLayout = ({ children }: AppLayoutProps) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   return (
@@ -49,11 +53,8 @@ const AppLayout = () => {
         </Box>
 
         {/* Main content area below header, centered */}
-        {/* <Flex as="main" flex="1" align="center" justify="center">
-          <EmptyBoard />
-        </Flex> */}
         <Flex as="main" flex="1">
-          <KanbanColumn />
+          {children || <Outlet />}
         </Flex>
       </Flex>
     </Flex>
