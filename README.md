@@ -1,78 +1,80 @@
-<<<<<<< HEAD
-# React + TypeScript + Vite
+# Kanban Task Manager
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive Kanban board application to help you manage your tasks efficiently. Built using a modern React stack with Vite and Chakra UI.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Kanban Board:** Organize tasks into customizable columns (e.g., Todo, Doing, Done).
+- **Task Management:** Create, edit, and delete tasks with an intuitive interface.
+- **Sidebar Layout:** Seamless, responsive sidebar navigation for switching contexts or boards.
+- **Modern UI:** Clean, glass-like styling equipped with smooth transitions, leveraging **Chakra UI** and the **Plus Jakarta Sans** font.
+- **Form Validation:** Performant and robust form handling using **React Hook Form**.
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Core:** [React 19](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
+- **Build Tool & Bundler:** [Vite](https://vitejs.dev/)
+- **UI & Styling:** [Chakra UI](https://chakra-ui.com/) + [@emotion/react](https://emotion.sh/)
+- **Routing:** [React Router 7](https://reactrouter.com/)
+- **Form Management:** [React Hook Form](https://react-hook-form.com/)
+- **Icons:** [React Icons](https://react-icons.github.io/react-icons/)
+- **Theme:** [next-themes](https://github.com/pacocoursey/next-themes)
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Prerequisites
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Ensure you have [Node.js](https://nodejs.org/) installed along with `npm` or another package manager.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Installation
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/fopeadelaja/task-manager.git
+   ```
+
+2. Navigate down into the project directory:
+   ```bash
+   cd task-manager
+   ```
+
+3. Install the dependencies:
+   ```bash
+   npm install
+   ```
+
+### Development
+
+To start the local Vite development server:
+```bash
+npm run dev
+```
+The application will usually be available at `http://localhost:5173`. 
+
+### Production Build
+
+To compile TypeScript and build the optimized production application:
+```bash
+npm run build
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+The output will be placed in the `dist` directory. You can preview the production build locally with:
+```bash
+npm run preview
 ```
-=======
-# task-manager
-Kanban Task Manager
->>>>>>> 510d3d8ad515830aeb6bbc776aa046b9b18ca587
+
+### Linting
+
+To run ESLint and check for code quality issues:
+```bash
+npm run lint
+```
+
+## Structure Highlights
+
+- `src/components/layout/` - Includes shell components like the `AppLayout` and `SideBar`.
+- `src/components/` - Includes task-related UI like `KanbanColumn`, `EditTask`, and dialogs.
+
+## License
+
+This project is licensed under the MIT License.
