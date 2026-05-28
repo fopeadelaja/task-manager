@@ -1,7 +1,6 @@
 import {
   Button,
   CloseButton,
-  Dialog,
   Input,
   Portal,
   VStack,
@@ -11,6 +10,7 @@ import {
   Select,
   createListCollection,
 } from "@chakra-ui/react";
+import { AppDialog } from "../ui/AppDialog";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { useBoard } from "../../context/BoardContext";
 
@@ -69,13 +69,9 @@ const AddNewTask = () => {
   });
 
   return (
-    <Dialog.Root
-      size="sm"
-      placement="center"
-      motionPreset="slide-in-bottom"
-      closeOnInteractOutside={true}
-    >
-      <Dialog.Trigger asChild>
+    <AppDialog
+      title="Add New Task"
+      trigger={
         <Button
           borderRadius="25px"
           bg="primary"
@@ -86,18 +82,9 @@ const AddNewTask = () => {
         >
           +Add New Task
         </Button>
-      </Dialog.Trigger>
-      <Portal>
-        <Dialog.Backdrop bg="blackAlpha.600" />
-        <Dialog.Positioner>
-          <Dialog.Content bg="cardBg" color="textMain" borderRadius="md" p={6}>
-            <Dialog.Header>
-              <Dialog.Title fontSize="xl" fontWeight="bold">
-                Add New Task
-              </Dialog.Title>
-            </Dialog.Header>
-            <Dialog.Body>
-              <form onSubmit={handleSubmit(onSubmit)}>
+      }
+    >
+      <form onSubmit={handleSubmit(onSubmit)}>
                 <VStack align="stretch" gap={6}>
                   <VStack align="stretch" gap={2}>
                     <Text fontSize="xs" fontWeight="bold" color="textMain">
@@ -252,12 +239,8 @@ const AddNewTask = () => {
                     Create Task
                   </Button>
                 </VStack>
-              </form>
-            </Dialog.Body>
-          </Dialog.Content>
-        </Dialog.Positioner>
-      </Portal>
-    </Dialog.Root>
+      </form>
+    </AppDialog>
   );
 };
 

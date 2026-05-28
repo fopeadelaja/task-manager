@@ -5,11 +5,10 @@ import {
   CloseButton,
   HStack,
   Input,
-  Portal,
   VStack,
-  Dialog,
   Text,
 } from "@chakra-ui/react";
+import { AppDialog } from "../ui/AppDialog";
 import { type CreateBoardFormValues } from "../../types/kanban";
 import { useBoard } from "../../context/BoardContext";
 
@@ -66,25 +65,8 @@ useEffect(() => {
   };
 
   return (
-    <Dialog.Root
-      size="sm"
-      placement="center"
-      motionPreset="slide-in-bottom"
-      closeOnInteractOutside={true}
-      open={isOpen}
-      onOpenChange={(e) => !e.open && onClose()}
-    >
-      <Portal>
-        <Dialog.Backdrop bg="blackAlpha.600" />
-        <Dialog.Positioner>
-          <Dialog.Content bg="cardBg" color="textMain" borderRadius="md" p={6}>
-            <Dialog.Header>
-              <Dialog.Title fontSize="xl" fontWeight="bold">
-                Edit Board
-              </Dialog.Title>
-            </Dialog.Header>
-            <Dialog.Body>
-              <form onSubmit={handleSubmit(onSubmit)}>
+    <AppDialog title="Edit Board" open={isOpen} onClose={onClose}>
+      <form onSubmit={handleSubmit(onSubmit)}>
                 <VStack align="stretch" gap={6}>
                   {/* Board Name */}
                   <VStack align="stretch" gap={2}>
@@ -166,12 +148,8 @@ useEffect(() => {
                     Save Changes
                   </Button>
                 </VStack>
-              </form>
-            </Dialog.Body>
-          </Dialog.Content>
-        </Dialog.Positioner>
-      </Portal>
-    </Dialog.Root>
+      </form>
+    </AppDialog>
   );
 };
 

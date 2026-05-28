@@ -1,14 +1,13 @@
 import { useForm, useFieldArray } from "react-hook-form";
 import {
   CloseButton,
-  Dialog,
-  Portal,
   VStack,
   Text,
   Input,
   HStack,
   Button,
 } from "@chakra-ui/react";
+import { AppDialog } from "../ui/AppDialog";
 import { type CreateBoardFormValues } from "../../types/kanban";
 import { useBoard } from "../../context/BoardContext";
 
@@ -50,25 +49,13 @@ const AddNewBoard = ({ isOpen, onClose }: Props) => {
   };
 
   return (
-    <Dialog.Root
-      size="sm"
-      placement="center"
-      motionPreset="slide-in-bottom"
-      closeOnInteractOutside={true}
+    <AppDialog
+      title="Add New Board"
       open={isOpen}
-      onOpenChange={(e) => !e.open && onClose()}
+      onClose={onClose}
+      contentProps={{ p: 2 }}
     >
-      <Portal>
-        <Dialog.Backdrop bg="blackAlpha.600" />
-        <Dialog.Positioner>
-          <Dialog.Content bg="cardBg" color="textMain" borderRadius="md" p={2}>
-            <Dialog.Header>
-              <Dialog.Title fontSize="xl" fontWeight="bold">
-                Add New Board
-              </Dialog.Title>
-            </Dialog.Header>
-            <Dialog.Body>
-              <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
                 <VStack align="stretch" gap={4}>
                   {/* Board Name */}
                   <VStack align="stretch" gap={2}>
@@ -141,12 +128,8 @@ const AddNewBoard = ({ isOpen, onClose }: Props) => {
                     +Create New Board
                   </Button>
                 </VStack>
-              </form>
-            </Dialog.Body>
-          </Dialog.Content>
-        </Dialog.Positioner>
-      </Portal>
-    </Dialog.Root>
+      </form>
+    </AppDialog>
   );
 };
 

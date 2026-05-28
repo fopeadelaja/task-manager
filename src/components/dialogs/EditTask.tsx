@@ -1,5 +1,6 @@
 import type { Task } from "@/types/kanban";
-import { Checkbox, Dialog, Flex, Portal, Text, Select, createListCollection, VStack } from "@chakra-ui/react";
+import { Checkbox, Flex, Portal, Text, Select, createListCollection, VStack } from "@chakra-ui/react";
+import { AppDialog } from "../ui/AppDialog";
 import { useState, useEffect } from "react";
 import { useBoard } from "../../context/BoardContext";
 
@@ -44,25 +45,8 @@ const EditTask = ({ isOpen, task, onClose }: Props) => {
   const completedCount = task?.subtasks?.filter(st => completedSubtasks.includes(st.id)).length || 0;
 
   return (
-    <Dialog.Root
-      size="sm"
-      placement="center"
-      motionPreset="slide-in-bottom"
-      closeOnInteractOutside={true}
-      open={isOpen}
-      onOpenChange={(e) => !e.open && onClose()}
-    >
-      <Portal>
-        <Dialog.Backdrop bg="blackAlpha.600" />
-        <Dialog.Positioner>
-          <Dialog.Content bg="cardBg" color="textMain" borderRadius="md" p={6}>
-            <Dialog.Header>
-              <Dialog.Title fontSize="xl" fontWeight="bold">
-                {task?.title}
-              </Dialog.Title>
-            </Dialog.Header>
-            <Dialog.Body>
-              <Text color="gray.400" mb={4}>{task?.description}</Text>
+    <AppDialog title={task?.title ?? ""} open={isOpen} onClose={onClose}>
+      <Text color="gray.400" mb={4}>{task?.description}</Text>
               
             {task?.subtasks && task.subtasks.length > 0 && (
               <>
@@ -150,11 +134,7 @@ const EditTask = ({ isOpen, task, onClose }: Props) => {
                   <Select.HiddenSelect />
                 </Select.Root>
               </VStack>
-            </Dialog.Body>
-          </Dialog.Content>
-        </Dialog.Positioner>
-      </Portal>
-    </Dialog.Root>
+    </AppDialog>
   );
 };
 
