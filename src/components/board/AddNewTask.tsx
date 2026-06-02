@@ -62,7 +62,7 @@ const AddNewTask = () => {
   };
 
   const columnsCollection = createListCollection({
-    items: (activeBoard?.status || []).map((column) => ({
+    items: (activeBoard?.columns || []).map((column) => ({
       label: column.title,
       value: column.id,
     })),

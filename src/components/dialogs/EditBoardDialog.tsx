@@ -35,7 +35,7 @@ const EditBoardDialog = ({
   } = useForm<CreateBoardFormValues>({
     defaultValues: {
       title: activeBoard?.title || "",
-      columns: activeBoard?.status.map((col) => ({ title: col.title })) || [
+      columns: activeBoard?.columns.map((col) => ({ title: col.title })) || [
         { title: "Todo" },
         { title: "Doing" },
       ],
@@ -47,7 +47,7 @@ useEffect(() => {
     if (isOpen && activeBoard) {
       reset({
         title: activeBoard.title,
-        columns: activeBoard.status.map((col) => ({ title: col.title })),
+        columns: activeBoard.columns.map((col) => ({ title: col.title })),
       });
     }
   }, [isOpen, activeBoard, reset]);

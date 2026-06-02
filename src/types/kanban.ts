@@ -16,10 +16,11 @@ export interface Column {
   tasks: Task[];
 }
 
+
 export interface Board {
   id: string;
   title: string;
-  status: Column[]
+  columns: Column[]
 }
 
 export interface CreateBoardFormValues {
@@ -33,7 +34,7 @@ export const Boards: Board[] = [
   {
     id: "PlatformLaunch",
     title: "Platform Launch",
-    status: [
+    columns: [
       {
         id: "Todo",
         title: "Todo",
@@ -83,7 +84,7 @@ export const Boards: Board[] = [
   {
     id: "Marketing Plan",
     title: "Marketing Plan",
-    status: [
+    columns: [
       {
         id: "Todo",
         title: "Todo",
@@ -133,7 +134,7 @@ export const Boards: Board[] = [
   {
     id: "RoadMap",
     title: "RoadMap",
-    status: [
+    columns: [
       {
         id: "Backlog",
         title: "Backlog",

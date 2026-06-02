@@ -38,7 +38,7 @@ export const BoardProvider: React.FC<{ children: React.ReactNode }> = ({
         // For simplicity, we match by index if possible to preserve tasks,
         // or just create new ones if they are added.
         const newColumns = data.columns.map((colData, index) => {
-          const existingCol = board.status[index];
+          const existingCol = board.columns[index];
           return {
             id: colData.title, // Using title as ID for now as per the static data pattern
             title: colData.title,
@@ -50,7 +50,7 @@ export const BoardProvider: React.FC<{ children: React.ReactNode }> = ({
           ...board,
           id: data.title, // If board name changes, ID also changes in this simple implementation
           title: data.title,
-          status: newColumns,
+          columns: newColumns,
         };
       }),
     );
@@ -66,7 +66,7 @@ export const BoardProvider: React.FC<{ children: React.ReactNode }> = ({
     const newBoard: Board = {
       id: data.title,
       title: data.title,
-      status: data.columns.map((col) => ({
+      columns: data.columns.map((col) => ({
         id: col.title,
         title: col.title,
         tasks: [],
@@ -83,7 +83,7 @@ export const BoardProvider: React.FC<{ children: React.ReactNode }> = ({
         if (board.id !== boardId) return board;
         return {
           ...board,
-          status: board.status.map((col) => {
+          status: board.columns.map((col) => {
             if (col.id !== columnId) return col;
             return {
               ...col,

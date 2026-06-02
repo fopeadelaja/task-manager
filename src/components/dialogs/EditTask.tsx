@@ -12,7 +12,7 @@ interface Props {
 
 const EditTask = ({ isOpen, task, onClose }: Props) => {
   const { activeBoard } = useBoard();
-  const currentColumn = activeBoard?.status.find((col) => col.tasks.some((t) => t.id === task?.id));
+  const currentColumn = activeBoard?.columns.find((col) => col.tasks.some((t) => t.id === task?.id));
   
   const [completedSubtasks, setCompletedSubtasks] = useState<number[]>([]);
   const [status, setStatus] = useState<string>("");
@@ -28,7 +28,7 @@ const EditTask = ({ isOpen, task, onClose }: Props) => {
   }, [isOpen, task, currentColumn?.id]);
 
   const columnsCollection = createListCollection({
-    items: (activeBoard?.status || []).map((column) => ({
+    items: (activeBoard?.columns || []).map((column) => ({
       label: column.title,
       value: column.id,
     })),
