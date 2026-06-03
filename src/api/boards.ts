@@ -20,7 +20,8 @@ function mapApiBoardToBoard(
 export const getBoards = async (userId: string) => {
   try {
     const response = await apiClient.get<GetBoardsResponse>(
-      `/boards/user-boards/${userId}`,
+      "/boards/user-boards",
+      { params: { userId } },
     );
     return response.data.boards.map(mapApiBoardToBoard);
   } catch (error) {
