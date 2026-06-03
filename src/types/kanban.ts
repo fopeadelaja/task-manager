@@ -7,7 +7,7 @@ export interface Task {
   id: string;
   title: string;
   description?: string;
-  subtasks?: Subtask[]
+  subtasks?: Subtask[];
 }
 
 export interface Column {
@@ -16,19 +16,32 @@ export interface Column {
   tasks: Task[];
 }
 
+export interface ApiColumn {
+  id: string;
+  title: string;
+  position: number;
+}
+export interface ApiBoard {
+  id: string;
+  title: string;
+  columns: ApiColumn[];
+}
 
+export interface GetBoardsResponse {
+  message: string;
+  boards: ApiBoard[];
+}
 export interface Board {
   id: string;
   title: string;
-  columns: Column[]
+  columns: Column[];
 }
-
 export interface CreateBoardFormValues {
   title: string;
   columns: {
     title: string;
   }[];
-};
+}
 
 export const Boards: Board[] = [
   {

@@ -1,14 +1,19 @@
-import React, { createContext, useContext, useState, useMemo } from "react";
-import {
-  type Board,
-  type CreateBoardFormValues,
-  Boards,
-} from "../types/kanban";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useMemo,
+  useEffect,
+} from "react";
+import { type Board, type CreateBoardFormValues } from "../types/kanban";
+import { getBoards } from "../api/boards";
+import { USER_ID } from "../config/env";
 
 interface BoardContextType {
   boards: Board[];
   activeBoardId: string;
   activeBoard: Board | undefined;
+  loading: boolean;
   setActiveBoard: (id: string) => void;
   updateBoard: (boardId: string, data: CreateBoardFormValues) => void;
   createNewBoard: (data: CreateBoardFormValues) => void;
@@ -20,27 +25,35 @@ const BoardContext = createContext<BoardContextType>({} as BoardContextType);
 export const BoardProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [boards, setBoards] = useState<Board[]>(Boards);
-  const [activeBoardId, setActiveBoardId] = useState<string>(
-    Boards[0]?.id || "",
-  );
+  const [boards, setBoards] = useState<Board[]>([]);
+  const [activeBoardId, setActiveBoardId] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const activeBoard = useMemo(
     () => boards.find((b) => b.id === activeBoardId),
     [boards, activeBoardId],
   );
 
+  useEffect(() => {
+    getBoards(USER_ID)
+      .then((fetchedBoards) => {
+        setBoards(fetchedBoards);
+        setActiveBoardId(fetchedBoards[0]?.id ?? "");
+      })
+      .catch((error) => {
+        console.error("Error fetching boards:", error);
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
   const updateBoard = (boardId: string, data: CreateBoardFormValues) => {
     setBoards((prevBoards) =>
       prevBoards.map((board) => {
         if (board.id !== boardId) return board;
-        // Create new columns based on the form data
-        // For simplicity, we match by index if possible to preserve tasks,
-        // or just create new ones if they are added.
         const newColumns = data.columns.map((colData, index) => {
           const existingCol = board.columns[index];
           return {
-            id: colData.title, // Using title as ID for now as per the static data pattern
+            id: colData.title,
             title: colData.title,
             tasks: existingCol ? existingCol.tasks : [],
           };
@@ -48,13 +61,12 @@ export const BoardProvider: React.FC<{ children: React.ReactNode }> = ({
 
         return {
           ...board,
-          id: data.title, // If board name changes, ID also changes in this simple implementation
+          id: data.title,
           title: data.title,
           columns: newColumns,
         };
       }),
     );
-    // If we renamed the active board, update the ID
     if (activeBoardId === boardId) {
       setActiveBoardId(data.title);
     }
@@ -73,7 +85,7 @@ export const BoardProvider: React.FC<{ children: React.ReactNode }> = ({
       })),
     };
 
-    setBoards([...boards, newBoard]);
+    setBoards((prev) => [...prev, newBoard]);
     setActiveBoardId(newBoard.id);
   };
 
@@ -83,7 +95,7 @@ export const BoardProvider: React.FC<{ children: React.ReactNode }> = ({
         if (board.id !== boardId) return board;
         return {
           ...board,
-          status: board.columns.map((col) => {
+          columns: board.columns.map((col) => {
             if (col.id !== columnId) return col;
             return {
               ...col,
@@ -101,6 +113,7 @@ export const BoardProvider: React.FC<{ children: React.ReactNode }> = ({
         boards,
         activeBoardId,
         activeBoard,
+        loading,
         setActiveBoard,
         updateBoard,
         createNewBoard,
