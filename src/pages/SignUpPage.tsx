@@ -1,8 +1,23 @@
-import { Button, VStack } from "@chakra-ui/react";
+import { Button, Spinner, VStack } from "@chakra-ui/react";
 import AuthFormField from "../components/auth/AuthFormField";
 import AuthLayout, { AuthLink } from "../components/auth/AuthLayout";
+import { signUp, type SignUpPayload } from "../api/auth";
+import { useForm } from "react-hook-form";
+interface SignUpFormValues extends SignUpPayload {
+  confirmPassword: string;
+}
 
 const SignUpPage = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<SignUpFormValues>();
+
+  const onSubmit = async (data: SignUpFormValues) => {
+    const result = await signUp(data);
+    console.log(result);
+  };
   return (
     <AuthLayout
       title="Create an account"
@@ -13,28 +28,39 @@ const SignUpPage = () => {
         </>
       }
     >
-      <form onSubmit={(e) => e.preventDefault()}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <VStack align="stretch" gap={4}>
           <AuthFormField
-            label="Full Name"
-            name="name"
+            label="First Name"
             type="text"
-            placeholder="Jane Doe"
-            autoComplete="name"
+            placeholder="Jane"
+            autoComplete="first-name"
+            {...register("firstName", { required: "First name is required" })}
+            errorMessage={errors.firstName?.message}
+          />
+          <AuthFormField
+            label="Last Name"
+            type="text"
+            placeholder="Doe"
+            autoComplete="last-name"
+            {...register("lastName", { required: "Last name is required" })}
+            errorMessage={errors.lastName?.message}
           />
           <AuthFormField
             label="Email Address"
-            name="email"
             type="email"
             placeholder="you@example.com"
             autoComplete="email"
+            {...register("email", { required: "Email is required" })}
+            errorMessage={errors.email?.message}
           />
           <AuthFormField
             label="Password"
-            name="password"
             type="password"
             placeholder="Create a password"
             autoComplete="new-password"
+            {...register("password", { required: "Password is required" })}
+            errorMessage={errors.password?.message}
           />
           <AuthFormField
             label="Confirm Password"
@@ -54,7 +80,7 @@ const SignUpPage = () => {
             mt={2}
             _hover={{ bg: "primaryHover" }}
           >
-            Create Account
+            {isSubmitting ? <Spinner /> : "Create Account"}
           </Button>
         </VStack>
       </form>
