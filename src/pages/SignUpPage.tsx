@@ -3,12 +3,15 @@ import AuthFormField from "../components/auth/AuthFormField";
 import AuthLayout, { AuthLink } from "../components/auth/AuthLayout";
 import { signUp, type SignUpPayload } from "../api/auth";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 import { toaster } from "../components/ui/toaster";
+import { getErrorMessage } from "../utils/getErrorMessage";
 interface SignUpFormValues extends SignUpPayload {
   confirmPassword: string;
 }
 
 const SignUpPage = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -28,10 +31,11 @@ const SignUpPage = () => {
         description: "You can now sign in to your account",
         type: "success",
       });
+      navigate("/login");
     } catch (error) {
       toaster.create({
         title: "Error creating account",
-        description: "Please try again",
+        description: getErrorMessage(error),
         type: "error",
       });
     }
