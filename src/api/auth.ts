@@ -25,7 +25,8 @@ export const signUp = async (payload: SignUpPayload) => {
       payload,
     );
     return response.data;
-  } catch {
-    console.error("Error signing up:");
+  } catch (error) {
+    console.error("Error signing up:", error);
+    throw error;
   }
 };
