@@ -3,6 +3,7 @@ import AuthFormField from "../components/auth/AuthFormField";
 import AuthLayout, { AuthLink } from "../components/auth/AuthLayout";
 import { signUp, type SignUpPayload } from "../api/auth";
 import { useForm } from "react-hook-form";
+import { toaster } from "../components/ui/toaster";
 interface SignUpFormValues extends SignUpPayload {
   confirmPassword: string;
 }
@@ -12,11 +13,27 @@ const SignUpPage = () => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    getValues,
   } = useForm<SignUpFormValues>();
 
-  const onSubmit = async (data: SignUpFormValues) => {
-    const result = await signUp(data);
-    console.log(result);
+  const onSubmit = async (data: SignUpPayload) => {
+    try {
+      const result = await signUp(data);
+      if (!result) {
+        throw new Error("Failed to create account");
+      }
+      toaster.create({
+        title: "Account created",
+        description: "You can now sign in to your account",
+        type: "success",
+      });
+    } catch (error) {
+      toaster.create({
+        title: "Error creating account",
+        description: "Please try again",
+        type: "error",
+      });
+    }
   };
   return (
     <AuthLayout
@@ -64,10 +81,15 @@ const SignUpPage = () => {
           />
           <AuthFormField
             label="Confirm Password"
-            name="confirmPassword"
             type="password"
             placeholder="Confirm your password"
             autoComplete="new-password"
+            {...register("confirmPassword", {
+              required: "Please confirm your password",
+              validate: (value) =>
+                value === getValues("password") || "Passwords do not match",
+            })}
+            errorMessage={errors.confirmPassword?.message}
           />
           <Button
             type="submit"
