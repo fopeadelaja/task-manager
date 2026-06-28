@@ -16,9 +16,10 @@ const SignUpPage = () => {
     getValues,
   } = useForm<SignUpFormValues>();
 
-  const onSubmit = async (data: SignUpPayload) => {
+  const onSubmit = async (data: SignUpFormValues) => {
+    const { confirmPassword, ...payload } = data;
     try {
-      const result = await signUp(data);
+      const result = await signUp(payload);
       if (!result) {
         throw new Error("Failed to create account");
       }
